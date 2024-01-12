@@ -15,6 +15,8 @@
 # git 사용자 바꾸기
 - git config --global user.email "name@naver.com"
 - git config --unset user.email
+- git config —global -l (list) - git global 설정 정보 보기
+
 
 # gitignore
 - gitignore(특정 파일이나 디렉토리 추적x - 텍스트 파일임)(파일명앞에 . 확장자 없음) - gitigonore.io(싸이트)
