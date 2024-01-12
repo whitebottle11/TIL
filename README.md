@@ -8,15 +8,19 @@
 # git 저장소 추가
 - git remote add origin [주소](물결있으면 지우기)
 - git push origin(저장소 이름) master(가지)
-- git pull origin master
-- git clone [https: 주소 ]
+- git pull origin master - push랑 동작 같음
+- git clone [https: 주소 ] - clone으로 받은 프로젝트는 이미 git init이 되어잇음, git remote add 안해도됨, 저장소가 아닌곳에서 clone 받아야함
 - git remote -v(저장소 목록)
 
 # git 사용자 바꾸기
 - git config --global user.email "name@naver.com"
 - git config --unset user.email
 - git config —global -l (list) - git global 설정 정보 보기
+- 윈도우 검색 - 자격증명
 
 
 # gitignore
 - gitignore(특정 파일이나 디렉토리 추적x - 텍스트 파일임)(파일명앞에 . 확장자 없음) - gitigonore.io(싸이트)
+
+#추가로 알게된것
+- 저장소가 다르면 이름이 같아도 상관없다(origin) - 저장소 주소가 중요
