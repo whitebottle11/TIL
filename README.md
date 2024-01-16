@@ -217,3 +217,210 @@ print('{0}와{1}은 같지 않다'.format('사과','당근')) ==> 사과와 당�
 print('{1}와{0}은 같지 않다'.format('사과','당근')) ==> 당근와 사과은 같지 않다
 print('We are the {} who say "{}!"'.format('knights', 'Ni')) ==> We are the knights who say "Ni!"
 print('The story of {0}, {1}, and {other}.'.format('Bill', 'Manfred', other='Georg')) ==> The story of Bill, Manfred, and Georg.
+---
+# 2024-01-16
+
+---
+
+## sequence Types
+
+여러 개의 값들을 순서대로 나열하여 저장하는 자료형(str, list, tuple, range) → **정렬 X**
+
+### tuple(튜플)
+
+여러 개의 값을 **순서대로 저장**하는 **변경 불가능**한 시퀸스 자료형
+
+어떤 자료형도 저장 가능
+
+```python
+my_tuple_1 = ()
+
+my_tuple_2 = (1**,**) → 콤마를 반드시 넣어줘야 함(빠지면 정수 1이 되어버림)
+
+my_tuple_3 = (1, ‘a’, 3, ‘b’)
+```
+
+개발자가 의도적으로 쓰기보다 파이썬 내부 동작에서 쓰임
+
+파이썬은 ,를 통해 한번에 할당 가능 → x,y = (10,20)
+
+→ x = 10, y = 20 (괄호는 생략 가능하다)
+
+### range
+
+연속된 정수 시퀀스를 **생성**하는 **변경 불가능**한 자료형
+
+range(n) → 0부터 n-1까지 숫자 시퀸스
+
+range(n,m) → n부터 m-1까지의 숫자 시퀸스
+
+print(range(5)) == range(0,5)
+
+→ 리스트로 형변환 시 데이터 확인 가능 =⇒ print(list(my_range_1)) #[0,1,2,3,4] 
+
+---
+
+## Non-sequence Type
+
+### dict - 딕셔너리
+
+**key - value** 쌍으로 이루어진 **순서와 중복이 없는 변경 가능**한 자료형
+
+key는 변경 불가능한 자료형만 사용 가능(str, int, float, tuple, range…)
+
+value는 모든 자료형 사용 가능
+
+{}로 표시 my_dic = {’key’ : ‘value’, ‘list’ : [1,2,3]}
+
+key로 접근(my_dict[’apple’]) - 순서가 없기때문에 인덱스로 접근 못함
+
+중복안됨 → 마지막에 넣은 값이 나옴
+
+### set
+
+**순서와 중복이 없는 변경 가능**한 자료형
+
+{}로 표기
+
+```python
+my_set_1 = set()
+
+my_set_2 = {1, 2, 3} 
+
+my_ set_3 = {1, 1, 1} == {1}
+```
+
+set는 **집합연산**이 가능함 - 합집합, 차집합, 교집합
+
+---
+
+## Other types
+
+### None
+
+값이 없음을 표현하는 자료형
+
+print 가능
+
+N이 대문자임
+
+### Boolean
+
+참과 거짓을 표현하는 자료형 (T와 F를 대문자로 써야함)
+
+collection
+
+---
+
+## Type Conversion
+
+### 암시적 형변환
+
+파이썬이 자동으로 형변환 하는 것
+
+```python
+print(3+0.5) = 8.0
+
+print(True + 3) = 4       True는 1 False는 0 거의 다 적용됨
+
+print(True + False) = 1
+```
+
+### 명시적 형변환
+
+개발자가 직접 형변환 하는 것(암시적 형변환이 아닌 모든 경우)
+
+str → integer : 형식에 맞는 숫자만 가능
+
+integer → str : 모두 가능
+
+---
+
+## 비교 연산자
+
+### is 비교 연산자
+
+메모리 내에서 같은 객체를 참조하는지 확인(주소를 비교)
+
+==은 동등성(equality), is 는 식별성(identitiy)
+
+```python
+print(1==True) → True (암시적 형변환 일어남)
+
+print(1 is True) → False
+```
+
+---
+
+## 논리 연산자
+
+### 단축평가
+
+논리 연산에서 두 번째 피연산자를 평가하지 않고 결과를 결정하는 동작
+
+```python
+vowels = ’aeiou’
+
+print((’a’ and ‘b’) in vowels) == b in vowels
+
+print((’b’ and ‘a’) in vowels) == a in vowels
+
+print(3 and 5) = 5
+
+print(0 and 3) = 0 → 단축평가
+
+print(5 or 3) = 5 → 단축평가
+
+print(3 or 0) = 3 → 단축평가
+
+print(0 or 3) = 3
+```
+
+---
+
+## 추가로 알게 된 것
+
+### mutable
+
+값이 변한다
+
+### immutable
+
+값이 변하지 않는다
+
+### 얕은 복사(shallow copy)
+
+b에 a를 할당하면 값이 할당되는 것이 아니라 같은 메모리 주소를 바라본다
+
+따라서 b를 변경하면 a도 바뀐다
+
+```python
+a = [1, 2, 3]
+>>> b = a # shallow copy
+>>> b[0]= 5
+>>> a
+[5, 2, 3]
+>>> b
+[5, 2, 3]
+>>> id(a)
+4396179528
+>>> id(b)
+4396179528
+```
+
+### 깊은 복사(deep copy)
+
+내부의 객체들까지 모두 새롭게 copy되는 것
+
+```python
+import copy
+>>> a = [[1,2],[3,4]]
+>>> b = copy.deepcopy(a)
+>>> a[1].append(5)
+>>> a
+[[1, 2], [3, 4, 5]]
+>>> b
+[[1, 2], [3, 4]]
+```
+
+a를 변경해도 b가 바뀌지 않는다
