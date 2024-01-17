@@ -424,3 +424,162 @@ import copy
 ```
 
 a를 변경해도 b가 바뀌지 않는다
+
+
+# 20240117
+
+# 함수
+&emsp; 특정 작업을 수행하기 위한 **재사용 가능**한 코드 묶음
+
+## 내장함수
+- 파이썬이 기본적으로 제공하는 함수
+별도의 **import없이** 바로 사용 가능
+```
+result = abs(-1)
+```
+
+## 함수 구조
+- parameter : 매개변수
+- body
+- return value : 반환값
+
+## 함수의 정의와 호출
+- Docstring
+    ```
+    """
+    함수의 설명법
+    """
+    ```로 함수의 사용법을 적음
+- return
+    함수의 실행을 종료하고 결과를 호출 부분으로 반환
+
+## 매개변수와 인자
+### 매개변수(parameter)
+&emsp; 함수를 **정의**할 때 함수가 받을 값을 나타내는 변수
+### 인자(argument)
+&emsp; 함수를 **호출**할 때, 실제로 전달되는 값
+
+1. Positional Arguments(위치인자)  
+   - 함수 호출시 인자의 위치에 따라 전달되는 인자  
+   - **위치인자는 함수 호출 시 반드시 값을 전달해야 함**
+2. Default Argument Value(기본 인자 값)
+   - 함수 정의에서 매개변수에 기본 값을 할당하는 것
+   - 함수 호출 시 인자를 전달하지 않으면, 기본값이 매개변수에 할당됨
+3. Keyword Argument(키워드 인자)
+   - 함수 호출시 인자의 이름과 함께 값을 전달하는 인자
+   - **호출 시 키워드 인자는 위치 인자 뒤에 위치해야 함**(인자가 어느 위치인지 알 수 없기 때문)
+4. Arbitrary Argument Lists(임의의 인자 목록)
+   - 정해지지 않은 개수의 인자를 처리하는 인자
+   - 함수 정의 시 매개변수 앞에 '*'를 붙여 사용하며, 여러개의 인자를 tuple로 처리
+5. Arbitrary Keyword Argument Lists(임의의 키워드 인자 목록)
+   - 정해지지 않은 개수의 키워드 인자를 처리하는 인자
+   - 함수 정의 시 매개변수 앞에 '**'를 붙여 사용
+   - 여러 개의 인자를 dictionary로 묶어 처리
+
+### 함수 인자 권장 작성순서  
+&emsp; 위치 -> 기본 -> 가변 -> 가변키워드
+```
+def func(pos1, pos2, age =30, *args, **kargs):
+print(pos1, pos2, age, args, kargs)
+func(10, 10, 50, (10,30), {})
+-> 10 10 50 10 30 {}
+```
+## 파이썬의 범위(Scope)
+- 로컬 변수를 글로벌에서 사용할 수 없음
+- 이는 변수의 **수명주기**와 연관있음
+
+### 이름 검색 규칙(Name Resolution)
+- LEGB Rule
+- **함수 내에서는 바깥 Scope의 변수에 접근 가능하나 수정은 할 수 없음**
+- 반대로(안쪽으로) 찾아가는것은 불가
+
+## 유용한 내장함수
+### map(function, iterable)
+- 순회 가능한 데이터구조(iterable)의 모든 요소에 함수를 적용하고, 그 결과를 map object로 반환
+- map 함수로 쓴 데이터는 mpa object 덩어리기 때문에 list로 감싸주어야 함
+- map에 함수 매개변수를 줄 때 ()을 빼고 함수명만 넣어야 함("()"을 넣으면 map이 실행될때 매개변수로 넣은 함수가 같이 실행되기 때문)
+
+### zip(*iterables)
+- 임의의 iterable을 모아 튜플을 원소로 하는 zip object를 반환
+
+### lambda(람다)함수
+- 이름 없이 정의되고 사용되는 익명 함수
+- lambda 매개변수 : 표현식
+- map의 첫번째 인자에 많이 쓰임
+```
+numbers = [1, 2, 3, 4, 5]
+def func(x):
+    return x ** 2
+
+result = list(map(func, numbers))
+pritn(result)
+
+result2 = list(map(lambda x: x**2, numbers))
+print(result2)
+```
+## Packing & Unpacking
+### Packing
+- 여러개의 값을 하나의 변수에 묶어서 담는 것
+- 변수에 담긴 값들은 튜플(tuple)형태로 묶임
+
+### unpacking
+- 패킹된 변수의 값을 개별적인 변수로 분리하여 할당하는 것
+- *는 리스트 요소를 언패킹
+- **는 딕셔너리의 키-값 쌍을 함수의 키워드 인자로 언패킹(인자와 매개변수가 같아야 함)
+---
+# 추가로 알게된 것
+1. 파이썬에서는 return이 없는 함수는 자동을 none을 리턴
+   ```
+   a = print(1)
+   print(a) # None
+   ```
+2. global 글로벌변수 의 값을 변경할 경우 재할당을 해야하기 때문에 global 변수명을 적어야 한다 - print()는 변수명을 안 적어도 가능(참조는 가능, 재할당은 불가능)
+3. 함수의 매개변수로 Unpacking을 줄 경우 튜플로 만들어져서 나온다
+   ```
+   def create_user(*total_user_info):
+    print(total_user_info)
+    name, age, address = total_user_info
+    increase_user()
+    user_info = {'name': name, 'age' : age, "address" : address}
+    print(f'{user_info["name"]}님 환영합니다!')
+    return user_info
+
+
+
+    name = ['김시습', '허균', '남영로', '임제', '박지원']
+    age = [20, 16, 52, 36, 60]
+    address = ['서울', '강릉', '조선', '나주', '한성부']
+    total_user_info = list(zip(name, age, address)) 
+    print(list(map(create_user, total_user_info)))
+   ```
+   결과 : ValueError: not enough values to unpack (expected 3, got 1)
+   이유 : (('김시습', 20, '서울'),)
+
+    ### 올바른 코드
+   ```
+   def create_user(*total_user_info):
+    name, age, address = total_user_info
+    increase_user()
+    user_info = {'name': name, 'age' : age, "address" : address}
+    print(f'{user_info["name"]}님 환영합니다!')
+    return user_info
+
+
+
+    name = ['김시습', '허균', '남영로', '임제', '박지원']
+    age = [20, 16, 52, 36, 60]
+    address = ['서울', '강릉', '조선', '나주', '한성부']
+    print(list(map(create_user, name, age, address)))
+   ```
+   결과 :('김시습', 20, '서울')로 매개변수가 들어감
+   
+4. map의 인자는 여러개 들어갈 수 있다 - map(함수, args1, args2, ...)
+5. lambda 함수에 딕셔너리가 바로 들어갈 수 있다
+    ```
+   list(map(lambda user_info: {'name' : user_info['name']}, iterable))
+   ```
+6. 함수의 바디가 존재하면 lambda함수로 만들 수 없다.
+7. map의 인자로 리스트를 줄 경우 리스트가 벗겨져서 들어간다 - [{'ㅁ' : 1, 'ㄴ' : 2}] -> {'ㅁ' : 1, 'ㄴ' : 2} ( 안의 요소들만 들어가기 때문)
+
+
+
