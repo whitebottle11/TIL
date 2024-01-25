@@ -745,3 +745,73 @@ def func():
    movie_detail = json.load(movie)
    # 파일이 현재 파일과 같은 파일에 있어야 함, 다른 파일에 있을 시 경로 추가
    ```
+
+# 20240125
+## OPP2
+### 상속
+- class 자식클래스(부모 클래스): 자식클래스가 부모클래스를 상속받는다
+- 자식클래스에서 메서드 실행시 자식 클래스 내부에서 먼저 찾고 없다면 부모 클래서에서 찾아 실행한다.
+- super() 쓰는 이유: 부모 클래스를 호출 -> 다중 상속 시 MRO를 기반으로 호출될 메서드를 결정하여 자동으로 호출(개발자가 직접 하나하나 하기 힘들다)
+  1. 다중상속시 부모 구별
+  2. 클래스명 변경시 일일히 찾을 필요 없음  
+   ```
+   class Person:
+    def __init__(self, name, age, number, email):
+        self.name = name
+        self.age = age
+        self.number = number
+        self.email = email
+
+
+   class Student(Person):
+      def __init__(self, name, age, number, email, student_id):
+        self.name = name
+        self.age = age
+        self.number = number
+        self.email = email
+        self.student_id = student_id
+
+
+   class Student(Person):
+      def __init__(self, name, age, number, email, student_id):
+        super().__init__(self, name, age, number, email)
+        self.student_id = student_id
+   # super().__init__()을 사용하여 중복을 줄임
+   # 매개변수는 꼭 넣어줘야 함
+   ```
+### 다중상속
+- 중복된 메서드가 있는 경우 상속 순서에 의해 결정
+- MRO : 메서드 결정 순서(깊이 우선, 왼쪽에서 오른쪽으로)
+- 상속 받더라도 생성자 함수 안에 있는 변수는 찾지못한다
+- D -> B -> C -> A 순으로 호출시 출력 순서는 A -> C -> B -> D => 스택형식
+
+### 에러와 에시
+- EOL : 라인이 끝나지 않음
+- 예외는 built-in되어있음
+### 예외 처리
+- except에 적혀진 에러에만 반응, 아무것도  안적을시 모든 에러에 반응할 수 있지만 대응을 못하기 때문에 좋지 않음(else 처럼 사용 가능)
+- BaseException : 모든 예외를 가지고 있는 최상위 클래스
+- **내장 예외 클래스는 상속 계층구조를 가지기 때문에 반드시 하위 클래스를 먼저 확일 할 수 있도록 해야함**
+
+### 새롭게 알 게 된것
+- 클래스 함수의 cls는 함수를 호출하는 본인이다
+   ```
+   @classmethod
+    def access_num_of_animal(cls):
+        return f'동물의 수는 {cls.num_of_animal}마리 입니다.'
+   ```
+   - Cat.access_num_of_animal 과 cat.access_num_of_animal는 다르다 Cat.access_num_of_animal은 부모의 access_num_of_animal을 참조하고 cat.access_num_of_animal은 cat 인스턴스의 access_num_of_animal를 참조한다
+- 함수명과 변수명이 같으면 오류가 생긴다
+   ```
+   def meow(self):
+        print(self.meow) #ERROR
+   ```
+- 클래스 안에 있는 변수는 클래스의 속성이라고 부르며 생성자에서 받아온 변수는 인스턴스 변수라고 부른다
+   ```
+   class Cat:
+      sound = '야옹'
+
+      def __init__(self, name):
+         self.name = name
+   # sound는 클래스 속성, name은 인스턴스 변수
+   ```
