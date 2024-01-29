@@ -823,3 +823,4 @@ def func():
 
 # 20240129
 - max, min을 못쓸 때 sort()나 sorted()로 정렬하는 방법이 있다.
+- 
