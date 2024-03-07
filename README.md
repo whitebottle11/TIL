@@ -1137,3 +1137,29 @@ def enq(n):
 - 한 요소에 동일한 가중치를 가진 선택자가 적용될 때 CSS에서 마지막에 나오는 선언이 적용됨
 - 속성은 되도록 'class'만 사용할 것
   - 여러 선택자들과 함께 사용할 경우 우선순위 규칙에 따라 예기치 못한 스타일 규칙이 적용되어 전반적인 유지보수가 어려워지기 때문
+# 20240307
+## CSS
+- box의 width는 박스안의 컨텐츠 너비를 의미 -> box-sizing: border-box로 바꿔주어야 함
+- box의 너비를 볼 때 테두리의 길이도 고려해야함
+### Inline, Block
+- 인라인 요소를 가운데 정열할떄는 text-align: center 사용, block 요소를 가운데 정렬할 때는 margin left, right: auto 사용 
+### Position 유형
+-  전체 페이지에 대한 레이아웃을 구성하는 것이 아닌 페이지 특정 항목의 위치를 조정
+   1. static
+   2. relative: 본인의 static 위치를 기준으로 이동
+      - 이동하더라도 본인의 static 위치를 잊지 않는다
+   3. absolute : 본인의 공간을 가지지 않는다
+      - 공중에 떠 있다고 생각하면 편하다
+      - 부모 영역을 기준으로 이동 - > 부모에게 position: relative를 주어야 함
+   4. fixed
+      - absolute와 마찬가지로 집을 나가지만 움직이지 않는다(차지하는 공간x)
+   5. sticky
+      - 특정한 임계점이 오기전까진 noraml flow, 특정한 위치가 되는 순간 fixed로 바뀜
+      - 동일한 임계점에 도착한 다음 sticky가 있다면 다음 sticky를 위에 올려준다
+### CSS Flexbox
+- 요소를 행과 열 형태로 배치하는 1차원 레이아웃 방식
+- main axis(주 축)
+  - flex item들이 배치되는 기본 축 
+- cross axis(교차 축)
+  - main axis 에 수직인 축
+- align-items : 한줄 정렬 -> 두 줄이 되는순간 정렬이 풀린다(items가 아닌 content로 해야함)
