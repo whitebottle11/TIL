@@ -1219,3 +1219,7 @@ def enq(n):
 ## Django
 ### DTL
 - template에서 조건, 반복, 변수 등의 프로그래밍적 기능을 제공하는 시스템
+# 20240314
+## Django
+### URL 이름 공간
+- app_name은 맞춰 주어야 함
