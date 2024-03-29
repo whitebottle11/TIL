@@ -1221,5 +1221,137 @@ def enq(n):
 - template에서 조건, 반복, 변수 등의 프로그래밍적 기능을 제공하는 시스템
 # 20240314
 ## Django
+### App URL mapping
+각 앱에 URL을 정의 -> 관리가 편함
+### Naming URL patterns
+URL에 이름을 지정
 ### URL 이름 공간
-- app_name은 맞춰 주어야 함
+app_name을 지정하여 앱 사이의 이름이 같은 url을 구분
+app_name은 맞춰 주어야 함
+### Django model
+DB의 테이블을 정의하고 데이터를 조작할 수 있는 기능들을 제공
+### Migrations
+model 클래스의 변경사항(필등 생성, 수정 삭제 등)을 DB에 최종 반영하는 방법
+ - Migrations 핵심 명령어
+   ```
+   python manage.py makemigrations(model class 기반으로 최종 설계도 작성)
+   python manage.py migrate (최종 설계도를 DB에 전달하여 반영)
+   ```
+### Automatic admin interface
+Dango는 추가 설치 및 설정없이 자동으로 관리자 인터페이스를 제공<br>
+-> 데이터 확인 및 테스트 등을 진행하는데 매우 유용<br>
+
+### admin 계정 생성
+```
+python manage.py createsuperuser
+```
+### CRUD
+소프트웨어가 가지는 기본적인 데이터 처리 기능
+- Create(저장)
+- Read(조회)
+- Update(갱신)
+- Delete(삭제)
+# 20240320
+## 그래프
+- 아이템(사물 또는 추상적 개념)들과 이들 사이의 연결 관계를 표현
+- 정점들의 집합과 이들을 연결하는 간선들의 집합으로 구성된 자료구조
+1. 그래프를 코드로 표현
+   - 인접 행렬
+     - V * V 배열을 활용해서 표현
+     - 갈 수 없다면 0, 있다면 1(가중치)를 저장
+     - 장점
+       - 노드간의 연결 정보를 한 방에 확인 가능
+       - 간선이 많을수록 유리
+     - 단점
+       - 노드 수가 커지면 메모리가 낭비된다(연결이 안된것도 저장)
+       - 노드 수 + 메모리 제한 반드시 확인할 것
+     - 특징
+       - 양방향 그래프는 중앙 우하단 대각선 기준을 대칭
+   -  인접 리스트
+      -  V 개의 노드가 갈 수 있는 정보만 저장
+      - 장점
+        - 메모리 사용량이 적다
+        - 탐색할 때 갈 수 있는 곳만 확인하기 때문에 시간적으로 효율
+      - 단점
+        -  특정 노드 간 연결 여부를 확인하는데 시간이 걸린다
+### 서로소 집합
+- 서로소 또는 상호배타 집합들은 서로 중복 포함된 원소가 없는 집합들(교집합이 없다)
+- 상호배타 집합을 표현하는 방법
+  - 연결 리스트
+  - 트리
+- 상호배타 집합 연산
+  - Make-set(집합 만들기)
+  - Find-set(대표 누구야?)
+  - Union(같은 집합으로 묶자)
+- 트리 표현
+  - 하나의 집합을 하나의 트리로 표현
+# 20240321
+## 그래프&백트래킹
+### 최소 비용 신장 트리
+- 신장 트리 중 비용의 합이 제일 적은 신장 트리
+1. Prim 알고리즘
+   - 하나의 정점에서 연결된 간선들 중에 하나씩 선택(bfs + 우선순위)
+   - 모든 정점이 선택될 때 까지 반복
+2. Kruskal 알고리즘
+  1. 전체 간선 정보를 저장 + 가중치로 정렬
+  2. 방문 처리(사이클이 발생하면 안됨 - union-find 알고리즘 활용)
+### 최단 경로
+- 간선의 가중치가 있는 그래프에서 두 정점 사이의 경로들 중에서 간선의 가중치의 합이 최소인 경로
+- 하나의 정점에서 끝 정점까지 최단경로
+  1. 다익스트라 알고리즘
+      - 시작 정점에서 누적거리가 최소인 정점을 선택해 나감
+- 모든 정점들에 대한 최단 경로
+  1. 벨만-포드 알고리즘
+  2. 프로이드-워샬 알고리즘
+# 20240325
+## Django
+### ORM
+객체 지향 프로그래밍 언어를 사용하여 호환되지 않는 유형의 시스템 간에 데이터를 변환하는 기술
+### QuerySet API
+ORM에서 데이터를 검색, 필터링, 정렬 및 그룹화 하는 데 사용하는 도구 <br>
+python의 모델 클래스와 인스턴스를 활용해 DB에 데이터를 저장, 조회, 수정, 삭제하는 것
+- Query: 데이터베이스에 특정한 데이터를 보여 달라는 요청
+- QuerySet - 데이터베이스에서 전달 받은 객체 목록(리스트처럼 쓰면 됨) 단, 단일한 객체를 반환 할 때는 모델의 인스턴스로 반환됨
+- all()은 결과에 상관없이 QuerySet으로 응답
+- filter(): 결과에 상관없이 QuerySet으로 응답
+### QuerySet API 실습 사전 준비
+```
+pip install ipython
+pip install django-extensions
+pip freeze > requirements.txt
+```
+### Django shell 실행
+Django 환경 안에서 실행되는 python shell
+```
+python manage.py shell_plus
+```
+### 데이터 객체를 생성하는 3가지 방법
+```
+# 1. 
+article = Article()
+article.title = 'first'
+article.content = 'django'
+articl.save()  # save()를 해주어야 저장됨
+
+# 2. 
+article = Article(title = 'second', content='django!)
+article.save()
+
+# 3.
+Article.objects.create(title='third', content='django!')
+```
+### 대표적인 조회 메서드
+1. Return new QuerySets
+   - all(): 전체 데이터 조회
+   - filter(): 특정 조건 데이터 조회
+2. Do not return QuerySets
+   - get(): 단일 데이터 조회
+   - get() 특징
+      1. 객체를 찾을 수 없으면 DoesNotExist 예외를 발생시키고 둘 이상의 객체를 찾으면 MutipleObjectsReturned 예외를 발생시킴
+      2. Primary Key와 같이 고유성을 보장하는 조회에서 사용
+# 20240329
+## Form
+### modelForm
+form 은 데이터 베이스에 저장x, modelForm은 데이터 베이스에 저장하는 용도
+### Meta class
+modelForm의 정보를 작성하는 곳
