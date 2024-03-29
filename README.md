@@ -1355,3 +1355,4 @@ Article.objects.create(title='third', content='django!')
 form 은 데이터 베이스에 저장x, modelForm은 데이터 베이스에 저장하는 용도
 ### Meta class
 modelForm의 정보를 작성하는 곳
+
