@@ -1355,4 +1355,8 @@ Article.objects.create(title='third', content='django!')
 form 은 데이터 베이스에 저장x, modelForm은 데이터 베이스에 저장하는 용도
 ### Meta class
 modelForm의 정보를 작성하는 곳
-
+# 20240408
+## ManyToManyField
+### symmetrical
+- 기본적으로 True(대칭이다)
+- ManyToManyField가 동일한 모델을 가르키는 정의에서만 사용
